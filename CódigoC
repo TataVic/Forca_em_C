@@ -1,0 +1,425 @@
+//Ryhan e Tauani
+//Trabalho da forca em Estrutura de Dados 
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <string.h>
+#include <time.h>
+
+struct no{
+	char valor;
+	struct no *prox;
+};
+
+typedef struct no FILA;
+
+FILA *primeiro, *ultimo;
+
+void inicializar(){
+	primeiro = NULL;
+	ultimo = NULL;
+}
+
+void inserir( char e){
+	FILA *novo = malloc(sizeof(FILA));
+	novo->valor = e;
+	novo->prox = NULL;
+	if( primeiro == NULL ) 
+		primeiro = novo;
+	else 
+		ultimo->prox = novo;	
+
+	ultimo = novo;
+}
+
+void exibir(){
+	int i=0;
+	FILA *aux = primeiro;
+	    printf("\nJogadas:");
+	while( aux != NULL){
+		printf("\n%c ",aux->valor);
+		i++;
+		aux = aux->prox;
+	}
+}
+
+void forca(int erros){ //função para a forca
+    if (erros==0){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+
+    }if (erros==1){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |        O");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+
+    }if (erros==2){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |        O");
+        printf(" \n |        |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+    }if (erros==3){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |        O");
+        printf(" \n |       /|");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+    }if (erros==4){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |        O");
+        printf(" \n |       /|\\");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+    }if (erros==5){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |        O");
+        printf(" \n |       /|\\");
+        printf(" \n |       / ");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+    }if (erros==6){
+        printf(" \n O---------");
+        printf(" \n |/       +");
+        printf(" \n |        O");
+        printf(" \n |       /|\\");
+        printf(" \n |       / \\");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n |");
+        printf(" \n---\n");
+    }
+}
+
+void main(){
+    setlocale( LC_ALL, "Portuguese");
+
+    int erros=0, opcao, opcao2, nivel, i, j, m=0;
+    char jogador1[20], jogador2[20], palavra[9], palavraTela[9], letra, letrafalsa, letrasErro[26];
+    //banco de dados de possiveis palavras 
+    char banco4[20][4]={"cama","casa","suco","rato","area","doce","cedo","cela","alma","sair","agua","pena","nome","luta","bola","suar","item","real","fogo","pneu"};
+    char banco6[20][6]={"habito","eficaz","objeto","duvida","rotina","origem","grande","inveja","pensar","melhor","enigma","beleza","pessoa","viagem","teoria","ajudar","chapeu","modelo","evento","brasil"};
+    char banco8[20][8]={"respeito","pandemia","refletir","objetivo","generico","harmonia","caridade","trabalho","escrever","natureza","sarcasmo","estranho","elemento","presente","ambiente","criatura","cachorro","vergonha","material","fantasia"};
+	
+	inicializar();
+    printf("Jogador 1:\nDigite seu nome:\n");
+    gets(jogador1);
+    printf("\nEscolha a opção de jogo:\n1-jogador vs jogador\n2-jogador vs computador\n3-computador vs jogador\n");
+    scanf("%d", &opcao);
+    printf("\nEscolha o nível de dificuldade:");
+    printf("\n1-Fácil (4 letras)");
+    printf("\n2-Médio (6 letras)");
+    printf("\n3-Difícil (8 letras)\n");
+    scanf("%d", &nivel);
+    if (nivel==1)
+        nivel=4;
+    if (nivel==2)
+        nivel=6;
+    if (nivel==3)
+        nivel=8;
+
+    if(opcao==1){ // inicio do if para modo de jogo escolhido
+        printf("Jogador 2:\nDigite seu nome:\n");
+        scanf("%s", &jogador2);
+        printf("\n%s, digite a palavra secreta:", jogador1);
+        scanf("%s", &palavra);
+       
+	   	 while(strlen(palavra)!=nivel){ // while não deixa passar se a quantidade de letra for diferente do nivel escolhido
+            printf("\nTamanho da palavra diferente de %d, digite outra palavra\n", nivel);
+            scanf("%s", &palavra);
+         }
+        
+		system("cls"); // limpando a tela
+
+        	strcpy(palavraTela, palavra); //copia o que esta em palavra para palavraTela
+        		for(i=0; i<strlen(palavraTela); i++){ //esse for substitui letras por underscore
+                	palavraTela[i]='_';
+       			 }
+       	 while(1) {
+            int errou=1;
+            forca(erros);
+            printf("\nA palavra é... ");
+            	for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                	printf("%c ", palavraTela[i]);
+            	}
+            int v;	
+            do{
+            
+                v=0;
+                printf("\nDigite a letra: ");
+                scanf(" %c", &letrafalsa);
+        	   		
+                for(i=0; i<strlen(palavraTela);i++){
+                    if(letrafalsa==palavra[i]){ // se acertar, palavraTela atualiza
+                        palavraTela[i]=letrafalsa;
+                        if(letrafalsa==letrasErro[i]){
+            		        forca(erros);
+            		        system("cls");
+            		        forca(erros);
+            		        printf("\nLetra já digitada\n");
+            		        
+                        }else{
+                        errou=0; //False - errou=0, nao errou
+                        v=3;
+                        inserir(letrafalsa);
+                        letra=letrafalsa;
+                        letrasErro[m]=letra;
+                        m++;
+                        }    
+                    }
+                }if(errou==1){//True - errou=1, errou
+                        for(i=0;i<strlen(letrasErro);i++){
+            		        if(letrafalsa==letrasErro[i]){
+            		        system("cls");
+            		        forca(erros);
+            		        printf("\nLetra já digitada\n");
+            		        
+            			    v=1; //verifica se a letra ja foi utilizada
+					        }
+                        }   
+                }
+            }while(v==1);
+            if(v==0){
+                letrasErro[m]=letrafalsa;
+			    letra=letrafalsa;
+				inserir(letra);
+				erros++;
+				m++;
+            }        
+            if (strcmp(palavraTela, palavra)==0){  //compara se palavraTela e palavra são iguais, se sim, jogador 2 ganhou
+                system("cls");
+                forca(erros);
+                printf("\nA palavra é... ");
+                for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                    printf("%c ", palavraTela[i]);
+                }
+                printf("\n%s, você GANHOU!\n%s, você PERDEU!\n", jogador2, jogador1);
+                break;
+                system("cls");
+            }
+            if (erros==6){ // verifica se jogador 2 perdeu
+                system("cls");
+                forca(erros);
+                printf("\nA palavra é... ");
+                printf("%s", palavra);
+                for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                }
+                printf("\n%s, você PERDEU!\n%s, você GANHOU!\n", jogador2, jogador1);
+                break;
+                system("cls");
+            }system("cls");
+        } 
+    } 
+    if(opcao==2){ //jogador vs maquina
+        printf("\n%s, digite a palavra secreta:", jogador1);
+        scanf("%s", &palavra);
+        while(strlen(palavra)!=nivel){ // while não deixa passar se a quantidade de letra for diferente do nivel escolhido
+            printf("\nTamanho da palavra diferente de %d, digite outra palavra\n", nivel);
+            scanf("%s", &palavra);
+        }system("cls"); // limpando a tela
+        strcpy(palavraTela, palavra); //copia o que esta em palavra para palavraTela
+        for(i=0; i<strlen(palavraTela); i++){ //esse for substitui letras por underscore
+            palavraTela[i]='_';
+        }
+        do {
+            int errou=1;
+            forca(erros);
+            printf("\nA palavra é... ");
+            for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                printf("%c ", palavraTela[i]);
+            }
+            int v;
+            do{
+                v=0;
+                srand (time(NULL)); // para gerar valor random atraves do relogio
+                letrafalsa= 97 + (char)(rand()%26); // sorteando letra aleatoria, 97=a + 26 porque são 26 letras do alfabeto
+                printf("\nLetra digitada: %c ", letra); 
+                for(i=0; i<strlen(palavraTela);i++){
+                    if(letrafalsa==palavra[i]){ // se acertar, palavraTela atualiza
+                        palavraTela[i]=letrafalsa;
+                        if(letrafalsa==letrasErro[i]){
+            		        forca(erros);
+            		        printf("\nLetra já digitada\n");
+            		        system("Pause");
+                        }else{
+                        errou=0; //False - errou=0, nao errou
+                        v=3;
+                        inserir(letrafalsa);
+                        letra=letrafalsa;
+                        letrasErro[m]=letra;
+                        m++;
+                        }    
+                    }
+                }if(errou==1){//True - errou=1, errou
+                        for(i=0;i<strlen(letrasErro);i++){
+            		        if(letrafalsa==letrasErro[i]){
+            		        forca(erros);
+            		        printf("\nLetra já digitada\n");
+            		        system("Pause");
+            			    v=1; //verifica se a letra ja foi utilizada
+					        }
+                        }   
+                }
+            }while(v==1);
+                if(v==0){
+                    letrasErro[m]=letrafalsa;
+			        letra=letrafalsa;
+				    inserir(letra);
+				    erros++;
+				    m++;
+                }
+        
+            if(strcmp(palavraTela, palavra)==0){  //compara se palavraTela e palavra são iguais, se sim, maquina ganhou
+            	system("pause");
+                forca(erros);
+                printf("\nA palavra é... ");
+                for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                    printf("%c ", palavraTela[i]);
+                }
+                printf("\nLetra digitada: %c ", letra);
+                printf("\nmáquina GANHOU!\n%s, você PERDEU!\n", jogador1);
+                break;
+                system("cls");
+            }
+            if(erros==6){ // verifica se jogador1 ganhou
+            	system("pause");
+                forca(erros);
+                printf("\nA palavra é... ");
+                for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                    printf("%c ", palavraTela[i]);
+                }
+                printf("\nLetra digitada: %c ", letra);
+                printf("\nmáquina PERDEU!\n%s, você GANHOU!\n", jogador1);
+                break;
+                system("cls");
+            }system("pause");
+        }while(1);            
+    }
+
+    if(opcao==3){ //maquina vs jogador
+        for(i=0;i<9;i++){
+            palavra[i]=NULL; //transformando palavra em NULL para nao dar erro na questão da
+        }                   //quantidade de letras (4,6,8) se não fizer isso, sempre serão 8
+        i=rand()%20; //gerando um numero randomico até 20 no i 
+        for(j=0;j<nivel;j++){
+            if (nivel==4){ // if para palavra receber uma palavra chave
+                palavra[j]=banco4[i][j];
+            }
+            if(nivel==6){
+            palavra[j]=banco6[i][j];
+            }if(nivel==8){
+                palavra[j]=banco8[i][j];
+            }
+        }
+        strcpy(palavraTela, palavra); //copia o que esta em palavra para palavraTela
+        for(i=0; i<strlen(palavraTela); i++){ //esse for substitui letras por underscore
+            palavraTela[i]='_';
+        }
+        while(1) {
+            int errou=1;
+            forca(erros);
+            printf("\nA palavra é... ");
+            for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                printf("%c ", palavraTela[i]);
+            }
+            int v;
+            do{
+    
+                v=0;
+                printf("\nDigite a letra: ");
+                scanf(" %c", &letrafalsa);
+                
+                for(i=0; i<strlen(palavraTela);i++){
+                    if(letrafalsa==palavra[i]){ // se acertar, palavraTela atualiza
+                        palavraTela[i]=letrafalsa;
+                        if(letrafalsa==letrasErro[i]){
+                        	system("cls");
+            		        forca(erros);
+            		        printf("\nLetra já digitada\n");
+                        }else{
+                        errou=0; //False - errou=0, nao errou
+                        v=3;
+                        inserir(letrafalsa);
+                        letra=letrafalsa;
+                        letrasErro[m]=letra;
+                        m++;
+                        }    
+                    }
+                }if(errou==1){//True - errou=1, errou
+                        for(i=0;i<strlen(letrasErro);i++){
+            		        if(letrafalsa==letrasErro[i]){
+            		        system("cls");
+            		        forca(erros);
+            		        printf("\nLetra já digitada\n");
+            			    v=1; //verifica se a letra ja foi utilizada
+					        }
+                        }   
+                }
+            }while(v==1);
+            if(v==0){
+                letrasErro[m]=letrafalsa;
+			    letra=letrafalsa;
+				inserir(letra);
+				erros++;
+				m++;
+            }        
+            if (strcmp(palavraTela, palavra)==0){  //compara se palavraTela e palavra são iguais, se sim, jogador1 ganhou
+                system("cls");
+                forca(erros);
+                printf("\nA palavra é... ");
+            for(i=0; i<strlen(palavraTela);i++){ // for para imprimir os underscores com espaço entre eles
+                printf("%c ", palavraTela[i]);
+            }
+            printf("\n%s, você GANHOU!\nmáquina PERDEU!\n", jogador1);
+            break;
+            system("cls");
+            }
+            if (erros==6){ // verifica se jogador1 perdeu
+                system("cls");
+                forca(erros);
+                printf("\nA palavra é... ");
+                printf("%s", palavra);
+                printf("\n%s, você PERDEU!\nmáquina GANHOU!\n", jogador1);
+                break;
+                system("cls");
+            }system("cls");
+        } 
+
+    }
+    	int saida; 
+    	printf("\n1-Ver histórico de jogadas\n2-Sair "); // menu de saída
+    	scanf("%d", &saida);
+    	if(saida==1){
+    		exibir(); //printf da fila
+		}
+    system("pause");
+}
