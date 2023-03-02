@@ -1,6 +1,6 @@
 # Forca_em_C
 -------------------------------------------------------------------
-<h4> Créditos : @ryhanclayver </h4> 
+<h4> Autor : @ryhanclayver </h4> 
 <hr>
 Jogo da Forca em Linguagem C + aplicado com Estrutura de Dados (ED)
 <h4> Objetivo: tipos diferentes de jogo da forca </h4> 
