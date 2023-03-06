@@ -1,7 +1,7 @@
 # Forca_em_C
 -------------------------------------------------------------------
 <h4> Autor(es) : @ryhanclayver e @TataVic </h4> 
-<a href="https://github.com/ryhanclayver">perfil do autor Ryhan</a>.
+<a href="https://github.com/ryhanclayver">perfil do autor Ryhan</a>
 <hr>
 Jogo da Forca em Linguagem C + aplicado com Estrutura de Dados (ED)
 <h4> Objetivo: tipos diferentes de jogo da forca </h4> 
